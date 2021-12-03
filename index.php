@@ -27,17 +27,29 @@ $procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
         <input type="submit" value="Consultar">
     </form>
     <br>
-    <?php
-
-    $sql = "SELECT * FROM info WHERE descricao LIKE '$procurar%' ORDER BY descricao";
-
+    <table border="1">
+       <tr><th>Código</th>
+        <th>Descrição</th> 
+        <th>Detalhes</th> 
+        <th>Alterar</th> 
+        <th>Excluir</th> 
+    </tr>
+    <?php 
     $pdo = Conexao::getInstance();
-    $consulta = $pdo->query($sql);
-    while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
-        echo "Código: {$linha['ID']} - Descrição: {$linha['DESCRICAO']}";
-        echo " - <a href=javascript:excluirRegistro('acao.php?acao=excluir&id={$linha['ID']}')>Excluir</a><br>";
-    }
-    ?>
+    $consulta = $pdo->query("SELECT * FROM info 
+                             WHERE descricao 
+                             LIKE '$procurar%'");
+    while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {   
+        ?>
+        <tr><td><?php echo $linha['ID'];?></td>
+            <td><?php echo $linha['DESCRICAO'];?></td>
+            <td><a href='show.php?id=<?php echo $linha['ID'];?>'><img class="icon" src="img/show.png" alt=""> </a></td>
+            <td><a href='cad.php?acao=editar&codigo=<?php echo $linha['ID'];?>'><img class="icon" src="img/edit.png" alt=""></a></td>
+            <td><a href="javascript:excluirRegistro('acao.php?acao=excluir&codigo=<?php echo $linha['ID'];?>')"><img class="icon" src="img/delete.png" alt=""></a></td>
+        </tr>
+    <?php } ?> 
+
+      
 </body>
 
 </html>
