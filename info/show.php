@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php 
-     include_once "conf/default.inc.php";
-     require_once "conf/Conexao.php";
+     include_once "../conf/default.inc.php";
+     require_once "../conf/Conexao.php";
      $title = "Lista de Clientes";
      $id = isset($_GET['id']) ? $_GET['id'] : "1";
 ?>
@@ -13,7 +13,7 @@
 <body>
 <a href="index.php"><button>Listar</button></a>
 <a href="cad.php"><button>Novo</button></a>
-<a href="cad.php?acao=editar&codigo=<?php echo $id;?>"><button>Alterar</button></a>
+<a href="cad.php?acao=editar&ID=<?php echo $id;?>"><button>Alterar</button></a>
 </br></br>
 <?php
    

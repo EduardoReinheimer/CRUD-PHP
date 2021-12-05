@@ -45,9 +45,9 @@ $procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
             <tr>
                 <td><?php echo $linha['ID']; ?></td>
                 <td><?php echo $linha['DESCRICAO']; ?></td>
-                <td><a href='show.php?ID=<?php echo $linha['ID']; ?>'><img class="icon" src="img/show.png" alt=""> </a></td>
-                <td><a href='cad.php?acao=editar&ID=<?php echo $linha['ID']; ?>'><img class="icon" src="img/edit.png" alt=""></a></td>
-                <td><a href="javascript:excluirRegistro('acao.php?acao=excluir&ID=<?php echo $linha['ID']; ?>')"><img class="icon" src="img/delete.png" alt=""></a></td>
+                <td><a href='show.php?ID=<?php echo $linha['ID']; ?>'><img class="icon" src="../img/show.png" alt=""> </a></td>
+                <td><a href='cad.php?acao=editar&ID=<?php echo $linha['ID']; ?>'><img class="icon" src="../img/edit.png" alt=""></a></td>
+                <td><a href="javascript:excluirRegistro('acao.php?acao=excluir&ID=<?php echo $linha['ID']; ?>')"><img class="icon" src="../img/delete.png" alt=""></a></td>
             </tr>
         <?php } ?>
 
