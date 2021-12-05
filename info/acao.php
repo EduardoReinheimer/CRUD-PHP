@@ -8,30 +8,29 @@
     // Se foi enviado via GET para acao entra aqui
     $acao = isset($_GET['acao']) ? $_GET['acao'] : "";
     if ($acao == "excluir"){
-        $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : 0;
-        excluir($codigo);
+        $ID = isset($_GET['ID']) ? $_GET['ID'] : 0;
+        excluir($ID);
     }
 
     // Se foi enviado via POST para acao entra aqui
     $acao = isset($_POST['acao']) ? $_POST['acao'] : "";
     if ($acao == "salvar"){
-        $codigo = isset($_POST['codigo']) ? $_POST['codigo'] : "";
-        if ($codigo == 0)
-            inserir($codigo);
+        $ID = isset($_POST['ID']) ? $_POST['ID'] : 0;
+        $DESCRICAO = isset($_POST['DESCRICAO']) ? $_POST['DESCRICAO'] : "";
+        if ($ID == 0)
+            inserir($ID);
         else
-            editar($codigo);
+            editar($ID);
     }
 
     // Métodos para cada operação
-    function inserir($codigo){
+    function inserir($ID){
         $dados = dadosForm();
-        //var_dump($dados);
-        
+        //var_dump($dados);       
         $pdo = Conexao::getInstance();
-
-        $stmt = $pdo->prepare('INSERT INTO info (descricao) VALUES(:descricao)');
-        $stmt->bindParam(':descricao', $_POST['descricao'], PDO::PARAM_STR);
-        $descricao = $_POST['descricao'];
+        $stmt = $pdo->prepare('INSERT INTO info (DESCRICAO) VALUES(:DESCRICAO)');
+        $stmt->bindParam(':DESCRICAO', $_POST['DESCRICAO'], PDO::PARAM_STR);
+        $DESCRICAO = $_POST['DESCRICAO'];
         
         $stmt->execute();
 
@@ -39,23 +38,23 @@
         
     }
 
-    function editar($id){
+    function editar($ID){
         $dados = dadosForm();
         $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('UPDATE info SET descricao = :descricao WHERE id = :codigo');
-        $stmt->bindParam(':descricao', $_POST['descricao'], PDO::PARAM_STR);
-        $stmt->bindParam(':codigo', $id, PDO::PARAM_INT);
-        $descricao = $dados['descricao'];
-        $codigo = $dados['ID'];
+        $stmt = $pdo->prepare('UPDATE info SET DESCRICAO = :DESCRICAO WHERE ID = :ID');
+        $stmt->bindParam(':DESCRICAO', $_POST['DESCRICAO'], PDO::PARAM_STR);
+        $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
+        $DESCRICAO = $dados['DESCRICAO'];
+        $ID = $dados['ID'];
         $stmt->execute();
         header("location:index.php");
     }
 
-    function excluir($id){
+    function excluir($ID){
         $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('DELETE FROM info WHERE id = :id');
-        $stmt->bindParam(':id', $id);
-        $id = $id;
+        $stmt = $pdo->prepare('DELETE FROM info WHERE ID = :ID');
+        $stmt->bindParam(':ID', $ID);
+        $ID = $ID;
         $stmt->execute();
         header('location:index.php');
     }
@@ -63,15 +62,15 @@
 
     function dadosForm(){
         $dados = array();
-        $dados['ID'] = $_POST['codigo'];
-        $dados['DESCRICAO'] = $_POST['descricao'];
+        $dados['ID'] = $_POST['ID'];
+        $dados['DESCRICAO'] = $_POST['DESCRICAO'];
         return $dados;
     }
 
      // Busca um item pelo código no BD
-     function buscarDados($id){
+     function buscarDados($ID){
         $pdo = Conexao::getInstance();
-        $consulta = $pdo->query("SELECT * FROM info WHERE ID = $id");
+        $consulta = $pdo->query("SELECT * FROM info WHERE ID = $ID");
         $dados = array();
         while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
             $dados['ID'] = $linha['ID'];
